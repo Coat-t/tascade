@@ -3,8 +3,11 @@ package com.coatt.tascade.screen;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.gui.screen.Screen;
+import net.minecraft.client.gui.screen.options.SkinOptionsScreen;
+import net.minecraft.client.gui.widget.ButtonWidget;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.LiteralText;
+import net.minecraft.text.TranslatableText;
 
 @Environment(EnvType.CLIENT)
 public class MainScreen extends Screen {
@@ -14,9 +17,17 @@ public class MainScreen extends Screen {
     super(new LiteralText("Tascade"));
     this.parent = parent;
   }
+
   @Override
   protected void init() {
-
+    this.addButton(new ButtonWidget(
+      20,
+      this.height - 20 - 10,
+      80,
+      20,
+      new LiteralText("Back"),
+      buttonWidget -> this.client.openScreen(parent)
+    ));
   }
 
   @Override
