@@ -16,7 +16,7 @@
 	"environment": "*",
 	"entrypoints": {
 		"main": [
-			"com.coatt.tascade.Tascade"
+          "com.coatt.tascade.Main"
 		]
 	},
 	"mixins": [

@@ -40,7 +40,7 @@ public class AuthHandler {
       serverVerify.put("username", username);
       socket.emit(Events.AUTH_VERIFY, serverVerify);
     } catch (Exception e) {
-      throw new RuntimeException(e);
+      e.printStackTrace();
     }
   }
 
