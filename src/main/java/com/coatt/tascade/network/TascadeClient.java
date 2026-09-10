@@ -2,6 +2,7 @@ package com.coatt.tascade.network;
 
 import com.coatt.tascade.Main;
 import io.socket.client.IO;
+import io.socket.client.Manager;
 import io.socket.client.Socket;
 import org.json.JSONObject;
 
@@ -51,6 +52,7 @@ public class TascadeClient {
         socket.connect();
       }
     } catch (Exception e) {
+      Main.profileStatus = Main.ProfileState.FAILED;
       e.printStackTrace();
     }
   }
@@ -87,8 +89,8 @@ public class TascadeClient {
   private void registerCoreListeners() {
     // server sends this immediately on connect
     socket.on(Events.AUTH_CHALLENGE, args -> {
+      Main.profileStatus = Main.ProfileState.LOADING;
       try {
-        System.out.println("Running auth Challenge...");
         // use reconnectKey instead of Mojang auth if available
         if (reconnectKey != null && !reconnectKey.isEmpty()) {
           JSONObject restore = new JSONObject();
@@ -100,6 +102,7 @@ public class TascadeClient {
           new Thread(() -> AuthHandler.doMojangAuth(socket, serverId)).start();
         }
       } catch (Exception e) {
+        Main.profileStatus = Main.ProfileState.FAILED;
         e.printStackTrace();
       }
     });
@@ -113,14 +116,9 @@ public class TascadeClient {
         Main.nickname = username;
         Main.pp = (int) Math.round(data.getDouble("performancePoints"));
         Main.elo = data.getInt("elo");
-
-        // Save / refresh reconnect key
+        Main.profileStatus = Main.ProfileState.SUCCESS;
         String newKey = data.optString("reconnectKey", null);
         if (newKey != null && !newKey.isEmpty()) saveReconnectKey(newKey);
-
-//        isProfileLoading = false;
-//        isProfilePresent = true;
-
         flushPendingActions();
       } catch (Exception e) {
         e.printStackTrace();
@@ -128,15 +126,12 @@ public class TascadeClient {
     });
 
     socket.on(Events.AUTH_FAILURE, args -> {
+      Main.profileStatus = Main.ProfileState.FAILED;
       authenticated = false;
-//      isProfileLoading = false;
-//      isProfilePresent = false;
       String reason = (args.length > 0 && args[0] instanceof JSONObject)
               ? ((JSONObject) args[0]).optString("reason", "Authentication failed")
               : (args.length > 0 ? String.valueOf(args[0]) : "Authentication failed");
-//      lastError = reason;
       System.err.println("[Tascade] Auth failed: " + reason);
-
       // On restore failure, clear the stored key
       if (reconnectKey != null) {
         reconnectKey = null;
@@ -144,6 +139,29 @@ public class TascadeClient {
           Files.deleteIfExists(Paths.get(MinecraftHelper.getGameDir(), CONFIG_DIR, CONFIG_FILE));
         } catch (Exception ignored) {}
       }
+    });
+    // socket connection statuses --
+    socket.on(Socket.EVENT_CONNECT, args -> {
+      // connected
+    });
+
+    socket.on(Socket.EVENT_DISCONNECT, args -> {
+      Main.profileStatus = Main.ProfileState.FAILED;
+    });
+
+    socket.on(Socket.EVENT_CONNECT_ERROR, args -> {
+      // `args[0]` connection error
+      Main.profileStatus = Main.ProfileState.FAILED;
+
+    });
+
+    socket.io().on(Manager.EVENT_RECONNECT_ATTEMPT, args -> {
+      // no. `args[0]` attempt
+    });
+
+    socket.io().on(Manager.EVENT_RECONNECT_FAILED, args -> {
+      // failed after max attempts
+      Main.profileStatus = Main.ProfileState.FAILED;
     });
   }
 
