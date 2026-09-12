@@ -41,10 +41,10 @@ public class TascadeClient {
         IO.Options opts = new IO.Options();
         opts.transports = new String[]{"websocket"};
         opts.reconnection = true;
-        opts.reconnectionAttempts = 5;
+        opts.reconnectionAttempts = Integer.MAX_VALUE;
         opts.reconnectionDelay = 1000;
         opts.reconnectionDelayMax = 5000;
-        opts.timeout = 20000;
+        opts.timeout = 5000;
         socket = IO.socket(URI.create(SERVER_URL), opts);
         registerCoreListeners();
       }
@@ -152,7 +152,6 @@ public class TascadeClient {
     socket.on(Socket.EVENT_CONNECT_ERROR, args -> {
       // `args[0]` connection error
       Main.profileStatus = Main.ProfileState.FAILED;
-
     });
 
     socket.io().on(Manager.EVENT_RECONNECT_ATTEMPT, args -> {

@@ -13,6 +13,9 @@ import net.minecraft.text.TranslatableText;
 @Environment(EnvType.CLIENT)
 public class MainScreen extends Screen {
   private final Screen parent;
+  private final int bottomPadding = 10;
+
+  private ButtonWidget playButton;
 
   public MainScreen (Screen parent) {
     super(new LiteralText("Tascade"));
@@ -23,11 +26,19 @@ public class MainScreen extends Screen {
   protected void init() {
     this.addButton(new ButtonWidget(
       14,
-      this.height - 20 - 10,
+      this.height - 20 - bottomPadding,
       80,
       20,
       new LiteralText("Back"),
       buttonWidget -> this.client.openScreen(parent)
+    ));
+    playButton = this.addButton(new ButtonWidget(
+            14,
+            this.height - 40 - bottomPadding - 10,
+            80,
+            20,
+            new LiteralText("Play"),
+            buttonWidget -> this.client.openScreen(new PlayScreen(this))
     ));
   }
 
