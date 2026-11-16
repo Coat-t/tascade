@@ -1,0 +1,35 @@
+{
+	"required": true,
+	"package": "com.coatt.tascade.mixin",
+	"compatibilityLevel": "JAVA_8",
+	"mixins": [
+		"HoldingPatternPhaseMixin", "TakeoffPhaseMixin", "StrafePlayerPhaseMixin",
+		"MinecraftServerMixin", "ServerWorldMixin", "WorldAccessor", "ServerPlayerEntityMixin", "PlayerManagerMixin", "PortalForcerMixin",
+		"RuinedPortalStructurePieceMixin", "LootManagerMixin", "PiglinBrainMixin",
+		"SinglePoolElementAccessor", "LootableContainerBlockEntityMixin", "LootTableMixin",
+		"BlockMixin", "EnderDragonEntityMixin", "DifficultyCommandMixin", "SeedCommandMixin",
+		"ConfiguredStructureFeatureMixin", "DungeonFeatureMixin",
+		"SpawnHelperMixin", "ServerChunkManagerMixin", "SurfaceChunkGeneratorMixin", "WorldRandomMixin", "EntityMixin",
+		"MobSpawnerBlockEntityMixin", "MobSpawnerLogicMixin", "MobSpawnerLogicAccessor", "StructureMixin", "StructureInvoker",
+		"LandPathNodeMakerMixin", "HostileEntityMixin", "LivingEntityMixin", "PlayerEntityMixin", "PlayerInventoryMixin", "SlotMixin", "InputSlotFillerMixin", "ExperienceRandomMixin", "EyeOfEnderEntityMixin", "BlockDropsMixin",
+		"access.ServerPlayerEntityAccessor", "access.SlotAccessor",
+		"seal.RegionFileMixin", "seal.PersistentStateMixin", "seal.WorldSaveHandlerMixin", "seal.LevelStorageSessionMixin"
+	],
+	"client": [
+		"TitleScreenMixin", "MinecraftClientMixin", "GameMenuScreenMixin", "ClientPlayerEntityMixin", "GameRendererMixin", "KeyboardMixin", "InGameHudMixin", "PlayerListHudMixin", "ClientPlayNetworkHandlerMixin",
+		"MouseMixin", "ChatHudMixin", "KeyBindingMixin",
+		"ClientConnectionMixin", "ClientPlayerInteractionManagerMixin", "ClientAdvancementManagerMixin", "CameraMixin",
+		"EntityRenderDispatcherMixin", "GameOptionsMixin", "SoundManagerMixin", "SoundSystemMixin", "ParticleManagerMixin",
+		"LivingEntityRendererMixin", "ItemStackMixin", "ClientWorldMixin", "LevelLoadingScreenMixin", "DownloadingTerrainScreenMixin", "ProgressScreenMixin", "HandledScreenMixin", "InventoryScreenMixin",
+		"access.MinecraftClientAccessor", "access.DebugRendererAccessor", "access.HandledScreenAccessor", "access.InventoryScreenAccessor",
+		"access.ScreenHandlerAccessor", "access.DeathScreenAccessor", "access.ClientAdvancementManagerAccessor",
+		"access.CameraInvoker", "access.ChatHudInvoker", "access.LivingEntityAccessor", "access.EntityInvoker",
+		"access.PlayerEntityAccessor", "access.AbstractSoundInstanceAccessor", "access.KeyBindingAccessor"
+	],
+	"injectors": {
+		"defaultRequire": 1
+	},
+	"overwrites": {
+		"requireAnnotations": true
+	}
+}

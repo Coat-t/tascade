@@ -1,0 +1,33 @@
+{
+	"schemaVersion": 1,
+	"id": "tascade",
+	"version": "${version}",
+	"name": "Tascade",
+	"description": "1v1 speedrunning for Minecraft 1.16.1. Race an opponent on the same filtered seed in ranked matches for Elo, or play solo runs for performance points, each in your own singleplayer world.",
+	"authors": [
+		"Coat_t"
+	],
+	"license": "MIT",
+	"icon": "assets/tascade/icon.png",
+	"environment": "client",
+	"entrypoints": {
+		"main": [
+			"com.coatt.tascade.Main"
+		]
+	},
+	"mixins": [
+		"tascade.mixins.json"
+	],
+	"custom": {
+		"speedrunapi": {
+			"config": "com.coatt.tascade.TascadeConfig"
+		}
+	},
+	"depends": {
+		"fabricloader": ">=0.19.3",
+		"minecraft": "~1.16.1",
+		"java": ">=8",
+		"speedrunapi": ">=2.0",
+		"speedrunigt": ">=14.1"
+	}
+}
