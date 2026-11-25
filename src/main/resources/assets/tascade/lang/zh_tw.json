@@ -1,1 +1,11 @@
-{}
+{
+  "tascade.split.enter_nether": "已進入地獄",
+  "tascade.split.enter_bastion": "已進入堡壘遺跡",
+  "tascade.split.enter_fortress": "已進入地獄要塞",
+  "tascade.split.finding_stronghold": "正在尋找要塞",
+  "tascade.split.enter_stronghold": "已進入要塞",
+  "tascade.split.enter_end": "已進入終界",
+  "tascade.split.kill_ender_dragon": "已殺死終界龍",
+  "speedrunapi.config.tascade.option.cheats": "允許作弊",
+  "speedrunapi.config.tascade.option.discordPresence": "Discord 狀態"
+}
