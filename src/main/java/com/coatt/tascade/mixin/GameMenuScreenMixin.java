@@ -19,7 +19,9 @@ import net.minecraft.text.StringRenderable;
 import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Util;
+import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -30,6 +32,9 @@ import java.util.List;
 @Mixin(GameMenuScreen.class)
 public abstract class GameMenuScreenMixin extends Screen {
 
+  @Shadow
+  @Final
+  private boolean showMenu;
   @Unique
   private ButtonWidget tascade$runButton;
 
@@ -95,7 +100,7 @@ public abstract class GameMenuScreenMixin extends Screen {
       }
     }
 
-    if (RunState.isRunning()) tascade$addResetWorldButton();
+    if (RunState.isRunning() && showMenu) tascade$addResetWorldButton();
 
     if (RunFinish.inTitlePhase()) {
       if (tascade$runButton != null) tascade$runButton.active = false;
